@@ -4,6 +4,22 @@
 import csv
 import sys
 
+
+def read_prices(filename):
+	prices = {}
+
+	with open(filename, 'rt') as f:
+		rows = csv.reader(f)
+		for row in rows:
+			if row == []:
+				continue
+			try:
+				prices[row[0]] = float(row[1])
+			except ValueError:
+				print("Couldn't parse", row)
+	return prices
+
+
 def read_portfolio(filename):
 	portfolio = []
 
@@ -12,11 +28,15 @@ def read_portfolio(filename):
 		headers = next(rows)
 		for row in rows:
 			try:
-				holding = (row[0], int(row[1]), float(row[2]))
+				holding = {
+					'name' : row[0],
+					'shares': int(row[1]),
+					'price': float(row[2])
+				}
 				portfolio.append(holding)
 			except ValueError:
 				print("Couldn't parse", row)
-		return portfolio
+	return portfolio
 
 
 if len(sys.argv) == 2:
