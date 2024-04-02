@@ -11,11 +11,15 @@ def parse_csv(filename: str, select = None, types = None, has_headers = True, de
 	with open(filename) as f:
 		rows = csv.reader(f, delimiter=delimiter)
 
+		#Select requires headers
+		if select and not has_headers:
+			raise RuntimeError("select argument requires column headers")
+
 		#Read the file headers
 		if has_headers:
 			headers = next(rows)
 
-		if select and has_headers:
+		if select:
 			indices = [headers.index(colname) for colname in select]
 			headers = select
 		else:
