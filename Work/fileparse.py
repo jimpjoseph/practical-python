@@ -4,7 +4,7 @@
 
 import csv
 
-def parse_csv(filename: str, select = None, types = None, has_headers = True, delimiter = ',') -> list:
+def parse_csv(filename: str, select = None, types = None, has_headers = True, delimiter = ',', silence_errors=False) -> list:
 	'''
 	Parse a CSV file into a list of records
 	'''
@@ -46,8 +46,9 @@ def parse_csv(filename: str, select = None, types = None, has_headers = True, de
 					records.append(tuple(row))
 			
 			except ValueError as e:
-				print(f"Row {lineno}: Couldn't covert {row}")
-				print(f"Row {lineno}: Reason {e}")
+				if not silence_errors:
+					print(f"Row {lineno}: Couldn't covert {row}")
+					print(f"Row {lineno}: Reason {e}")
 
 
 	return records
