@@ -62,12 +62,13 @@ def portfolio_report(portfolio_filename: str, prices_filename: str):
 	report = make_report(portfolio, prices)
 	print_report(report)
 
-if len(sys.argv) == 2:
-	filename = sys.argv[1]
-else:
-	filename = 'Data/portfolio.csv'
+if __name__ == '__main__':
+	if len(sys.argv) == 2:
+		filename = sys.argv[1]
+	else:
+		filename = 'Data/portfolio.csv'
 
-portfolio_report(filename, 'Data/prices.csv')
+	portfolio_report(filename, 'Data/prices.csv')
 
 
 
