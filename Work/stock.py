@@ -5,6 +5,9 @@ class Stock():
 		self.shares = shares
 		self.price = price
 
+	def __repr__(self):
+		return "Stock('" + self.name + "', " + str(self.shares) + ', ' + str(self.price) + ')'
+
 	def cost(self):
 		return self.shares * self.price
 

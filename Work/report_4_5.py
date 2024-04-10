@@ -45,18 +45,15 @@ def compute_profit(portfolio: dict, prices: list) -> float:
 		profit += p.shares*(prices[p.name] - p['price'])
 	return profit
 
-def print_report(report: list, formatter):
+def print_report(report: list,  formatter):
  	'''
  	Prints report based on the report.
  	'''
  	formatter.headings(['Name', 'Shares', 'Price', 'Change'])
- 	#print('%10s %10s %10s %10s'  % headers)
- 	#print(('-' * 10 + ' ') * len(headers))
  	for name, shares, price, change in report:
  		pr = "${:.2f}".format(price)
  		rowData = [name, str(shares), pr, f'{change:0.2f}']
  		formatter.row(rowData)
- 		#print(f'{name:>10s} {shares:>10d} {pr:>10s} {change:>10.2f}')
 
 def portfolio_report(portfolio_filename: str, prices_filename: str,fmt='txt'):
 	'''
@@ -65,14 +62,7 @@ def portfolio_report(portfolio_filename: str, prices_filename: str,fmt='txt'):
 	portfolio = read_portfolio(portfolio_filename)
 	prices = read_prices(prices_filename)
 	report = make_report(portfolio, prices)
-	if fmt == 'txt':
-		formatter = tableformat.TextTableFormatter()
-	elif fmt == 'csv':
-		formatter = tableformat.CSVTableFormatter()
-	elif fmt == 'html':
-		formatter = tableformat.HTMLTableFormatter()
-	else:
-		raise RuntimeError(f'Unknown format {fmt}')
+	formatter = tableformat.create_formatter(fmt)
 	print_report(report, formatter)
 
 def main(argv):
